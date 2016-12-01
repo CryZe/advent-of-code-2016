@@ -1,0 +1,13 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+authors = ["Christopher Serr <christopher.serr@gmail.com>"]
+build = "build.rs"
+
+[build-dependencies]
+lalrpop = "0.12.0"
+
+[dependencies]
+libc = "*"
+lazy_static = "*"
+lalrpop-util = "0.12.0"

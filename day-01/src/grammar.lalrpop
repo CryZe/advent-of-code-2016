@@ -1,0 +1,18 @@
+use Turn;
+use std::str::FromStr;
+
+grammar;
+
+pub turns: Vec<Turn> = {
+    <l:turns> "," <r:turn> => { let mut l = l; l.push(r); l },
+    <t:turn> => vec![t],
+};
+
+turn: Turn = {
+    "L" <n:num> => Turn::Left(n),
+    "R" <n:num> => Turn::Right(n),
+};
+
+num: u64 = {
+    r"((\d+(\.\d*)?)|(\.\d+))" => u64::from_str(<>).unwrap(),
+};
