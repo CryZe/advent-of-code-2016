@@ -14,5 +14,5 @@ turn: Turn = {
 };
 
 num: u64 = {
-    r"((\d+(\.\d*)?)|(\.\d+))" => u64::from_str(<>).unwrap(),
+    r"(\d+)" => u64::from_str(<>).unwrap(),
 };

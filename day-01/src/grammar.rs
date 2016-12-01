@@ -13,7 +13,7 @@ mod __parse__turns {
         Term_22_2c_22(&'input str),
         Term_22L_22(&'input str),
         Term_22R_22(&'input str),
-        Termr_23_22_28_28_5c_5cd_2b_28_5c_5c_2e_5c_5cd_2a_29_3f_29_7c_28_5c_5c_2e_5c_5cd_2b_29_29_22_23(&'input str),
+        Termr_23_22_28_5c_5cd_2b_29_22_23(&'input str),
         Termerror(__lalrpop_util::ErrorRecovery<usize, (usize, &'input str), ()>),
         Nt____turns(Vec<Turn>),
         Ntnum(u64),
@@ -125,7 +125,7 @@ mod __parse__turns {
                             _ => unreachable!(),
                         },
                         3 => match __lookahead.1 {
-                            (3, __tok0) => __Symbol::Termr_23_22_28_28_5c_5cd_2b_28_5c_5c_2e_5c_5cd_2a_29_3f_29_7c_28_5c_5c_2e_5c_5cd_2b_29_29_22_23(__tok0),
+                            (3, __tok0) => __Symbol::Termr_23_22_28_5c_5cd_2b_29_22_23(__tok0),
                             _ => unreachable!(),
                         },
                         _ => unreachable!(),
@@ -182,8 +182,8 @@ mod __parse__turns {
                 return Some(Ok(__nt));
             }
             2 => {
-                // num = r#"((\\d+(\\.\\d*)?)|(\\.\\d+))"# => ActionFn(5);
-                let __sym0 = __pop_Termr_23_22_28_28_5c_5cd_2b_28_5c_5c_2e_5c_5cd_2a_29_3f_29_7c_28_5c_5c_2e_5c_5cd_2b_29_29_22_23(__symbols);
+                // num = r#"(\\d+)"# => ActionFn(5);
+                let __sym0 = __pop_Termr_23_22_28_5c_5cd_2b_29_22_23(__symbols);
                 let __start = __sym0.0.clone();
                 let __end = __sym0.2.clone();
                 let __nt = super::__action5::<>(input, __sym0);
@@ -277,13 +277,13 @@ mod __parse__turns {
             _ => panic!("symbol type mismatch")
         }
     }
-    fn __pop_Termr_23_22_28_28_5c_5cd_2b_28_5c_5c_2e_5c_5cd_2a_29_3f_29_7c_28_5c_5c_2e_5c_5cd_2b_29_29_22_23<
+    fn __pop_Termr_23_22_28_5c_5cd_2b_29_22_23<
       'input,
     >(
         __symbols: &mut ::std::vec::Vec<(usize,__Symbol<'input>,usize)>
     ) -> (usize, &'input str, usize) {
         match __symbols.pop().unwrap() {
-            (__l, __Symbol::Termr_23_22_28_28_5c_5cd_2b_28_5c_5c_2e_5c_5cd_2a_29_3f_29_7c_28_5c_5c_2e_5c_5cd_2b_29_29_22_23(__v), __r) => (__l, __v, __r),
+            (__l, __Symbol::Termr_23_22_28_5c_5cd_2b_29_22_23(__v), __r) => (__l, __v, __r),
             _ => panic!("symbol type mismatch")
         }
     }
@@ -360,273 +360,269 @@ mod __intern_token {
                             __current_state = 1;
                             continue;
                         }
-                        46 => /* '.' */ {
-                            __current_state = 2;
-                            continue;
-                        }
                         48 ... 57 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         76 => /* 'L' */ {
                             __current_match = Some((1, __index + 1));
-                            __current_state = 4;
+                            __current_state = 3;
                             continue;
                         }
                         82 => /* 'R' */ {
                             __current_match = Some((2, __index + 1));
-                            __current_state = 5;
+                            __current_state = 4;
                             continue;
                         }
                         1632 ... 1641 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         1776 ... 1785 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         1984 ... 1993 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         2406 ... 2415 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         2534 ... 2543 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         2662 ... 2671 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         2790 ... 2799 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         2918 ... 2927 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3046 ... 3055 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3174 ... 3183 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3302 ... 3311 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3430 ... 3439 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3558 ... 3567 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3664 ... 3673 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3792 ... 3801 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         3872 ... 3881 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         4160 ... 4169 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         4240 ... 4249 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6112 ... 6121 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6160 ... 6169 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6470 ... 6479 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6608 ... 6617 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6784 ... 6793 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6800 ... 6809 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         6992 ... 7001 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         7088 ... 7097 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         7232 ... 7241 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         7248 ... 7257 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         42528 ... 42537 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         43216 ... 43225 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         43264 ... 43273 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         43472 ... 43481 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         43504 ... 43513 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         43600 ... 43609 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         44016 ... 44025 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         65296 ... 65305 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         66720 ... 66729 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         69734 ... 69743 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         69872 ... 69881 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         69942 ... 69951 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         70096 ... 70105 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         70384 ... 70393 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         70864 ... 70873 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         71248 ... 71257 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         71360 ... 71369 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         71472 ... 71481 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         71904 ... 71913 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         92768 ... 92777 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         93008 ... 93017 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         120782 ... 120831 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
+                            __current_state = 2;
                             continue;
                         }
                         _ => {
@@ -647,257 +643,257 @@ mod __intern_token {
                     match __ch as u32 {
                         48 ... 57 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         1632 ... 1641 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         1776 ... 1785 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         1984 ... 1993 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2406 ... 2415 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2534 ... 2543 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2662 ... 2671 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2790 ... 2799 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2918 ... 2927 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3046 ... 3055 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3174 ... 3183 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3302 ... 3311 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3430 ... 3439 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3558 ... 3567 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3664 ... 3673 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3792 ... 3801 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3872 ... 3881 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         4160 ... 4169 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         4240 ... 4249 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6112 ... 6121 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6160 ... 6169 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6470 ... 6479 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6608 ... 6617 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6784 ... 6793 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6800 ... 6809 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6992 ... 7001 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         7088 ... 7097 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         7232 ... 7241 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         7248 ... 7257 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         42528 ... 42537 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43216 ... 43225 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43264 ... 43273 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43472 ... 43481 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43504 ... 43513 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43600 ... 43609 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         44016 ... 44025 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         65296 ... 65305 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         66720 ... 66729 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         69734 ... 69743 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         69872 ... 69881 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         69942 ... 69951 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         70096 ... 70105 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         70384 ... 70393 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         70864 ... 70873 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71248 ... 71257 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71360 ... 71369 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71472 ... 71481 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71904 ... 71913 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         92768 ... 92777 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         93008 ... 93017 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         120782 ... 120831 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         _ => {
@@ -908,266 +904,6 @@ mod __intern_token {
                 3 => {
                     let (__index, __ch) = match __chars.next() { Some(p) => p, None => return __current_match };
                     match __ch as u32 {
-                        46 => /* '.' */ {
-                            __current_match = Some((3, __index + 1));
-                            __current_state = 8;
-                            continue;
-                        }
-                        48 ... 57 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        1632 ... 1641 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        1776 ... 1785 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        1984 ... 1993 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        2406 ... 2415 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        2534 ... 2543 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        2662 ... 2671 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        2790 ... 2799 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        2918 ... 2927 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3046 ... 3055 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3174 ... 3183 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3302 ... 3311 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3430 ... 3439 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3558 ... 3567 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3664 ... 3673 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3792 ... 3801 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        3872 ... 3881 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        4160 ... 4169 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        4240 ... 4249 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6112 ... 6121 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6160 ... 6169 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6470 ... 6479 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6608 ... 6617 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6784 ... 6793 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6800 ... 6809 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        6992 ... 7001 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        7088 ... 7097 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        7232 ... 7241 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        7248 ... 7257 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        42528 ... 42537 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        43216 ... 43225 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        43264 ... 43273 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        43472 ... 43481 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        43504 ... 43513 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        43600 ... 43609 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        44016 ... 44025 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        65296 ... 65305 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        66720 ... 66729 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        69734 ... 69743 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        69872 ... 69881 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        69942 ... 69951 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        70096 ... 70105 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        70384 ... 70393 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        70864 ... 70873 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        71248 ... 71257 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        71360 ... 71369 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        71472 ... 71481 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        71904 ... 71913 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        92768 ... 92777 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        93008 ... 93017 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
-                        120782 ... 120831 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 3;
-                            continue;
-                        }
                         _ => {
                             return __current_match;
                         }
@@ -1192,530 +928,259 @@ mod __intern_token {
                 6 => {
                     let (__index, __ch) = match __chars.next() { Some(p) => p, None => return __current_match };
                     match __ch as u32 {
-                        _ => {
-                            return __current_match;
-                        }
-                    }
-                }
-                7 => {
-                    let (__index, __ch) = match __chars.next() { Some(p) => p, None => return __current_match };
-                    match __ch as u32 {
                         48 ... 57 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         1632 ... 1641 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         1776 ... 1785 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         1984 ... 1993 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2406 ... 2415 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2534 ... 2543 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2662 ... 2671 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2790 ... 2799 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         2918 ... 2927 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3046 ... 3055 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3174 ... 3183 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3302 ... 3311 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3430 ... 3439 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3558 ... 3567 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3664 ... 3673 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3792 ... 3801 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         3872 ... 3881 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         4160 ... 4169 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         4240 ... 4249 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6112 ... 6121 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6160 ... 6169 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6470 ... 6479 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6608 ... 6617 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6784 ... 6793 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6800 ... 6809 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         6992 ... 7001 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         7088 ... 7097 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         7232 ... 7241 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         7248 ... 7257 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         42528 ... 42537 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43216 ... 43225 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43264 ... 43273 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43472 ... 43481 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43504 ... 43513 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         43600 ... 43609 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         44016 ... 44025 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         65296 ... 65305 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         66720 ... 66729 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         69734 ... 69743 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         69872 ... 69881 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         69942 ... 69951 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         70096 ... 70105 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         70384 ... 70393 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         70864 ... 70873 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71248 ... 71257 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71360 ... 71369 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71472 ... 71481 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         71904 ... 71913 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         92768 ... 92777 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         93008 ... 93017 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
+                            __current_state = 6;
                             continue;
                         }
                         120782 ... 120831 => {
                             __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 7;
-                            continue;
-                        }
-                        _ => {
-                            return __current_match;
-                        }
-                    }
-                }
-                8 => {
-                    let (__index, __ch) = match __chars.next() { Some(p) => p, None => return __current_match };
-                    match __ch as u32 {
-                        48 ... 57 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        1632 ... 1641 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        1776 ... 1785 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        1984 ... 1993 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        2406 ... 2415 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        2534 ... 2543 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        2662 ... 2671 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        2790 ... 2799 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        2918 ... 2927 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3046 ... 3055 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3174 ... 3183 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3302 ... 3311 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3430 ... 3439 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3558 ... 3567 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3664 ... 3673 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3792 ... 3801 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        3872 ... 3881 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        4160 ... 4169 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        4240 ... 4249 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6112 ... 6121 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6160 ... 6169 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6470 ... 6479 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6608 ... 6617 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6784 ... 6793 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6800 ... 6809 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        6992 ... 7001 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        7088 ... 7097 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        7232 ... 7241 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        7248 ... 7257 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        42528 ... 42537 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        43216 ... 43225 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        43264 ... 43273 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        43472 ... 43481 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        43504 ... 43513 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        43600 ... 43609 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        44016 ... 44025 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        65296 ... 65305 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        66720 ... 66729 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        69734 ... 69743 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        69872 ... 69881 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        69942 ... 69951 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        70096 ... 70105 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        70384 ... 70393 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        70864 ... 70873 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        71248 ... 71257 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        71360 ... 71369 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        71472 ... 71481 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        71904 ... 71913 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        92768 ... 92777 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        93008 ... 93017 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
-                            continue;
-                        }
-                        120782 ... 120831 => {
-                            __current_match = Some((3, __index + __ch.len_utf8()));
-                            __current_state = 8;
+                            __current_state = 6;
                             continue;
                         }
                         _ => {
