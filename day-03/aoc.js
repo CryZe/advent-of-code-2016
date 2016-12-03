@@ -5515,7 +5515,7 @@ staticSealed = true; // seal the static portion of memory
 
 
 
-Module['wasmTableSize'] = 118;
+Module['wasmTableSize'] = 116;
 
 function invoke_iiii(index,a1,a2,a3) {
   try {

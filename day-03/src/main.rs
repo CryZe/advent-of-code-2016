@@ -3,7 +3,6 @@ extern crate libc;
 
 use libc::c_char;
 use std::ffi::CStr;
-use std::iter::Map;
 use std::str::Lines;
 use std::cmp::max;
 
@@ -22,8 +21,18 @@ fn parse_line(line: &str) -> [u32; 3] {
     [a, b, c]
 }
 
-fn parse(text: &str) -> Map<Lines, fn(&str) -> [u32; 3]> {
-    text.lines().map(parse_line)
+struct Iter<'a>(Lines<'a>);
+
+impl<'a> Iterator for Iter<'a> {
+    type Item = [u32; 3];
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.next().map(parse_line)
+    }
+}
+
+fn parse(text: &str) -> Iter {
+    Iter(text.lines())
 }
 
 fn count_valid_horizontal(text: &str) -> usize {
