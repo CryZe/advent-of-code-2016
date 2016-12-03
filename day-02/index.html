@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Advent of Code</title>
+        <style>
+            button {
+                width: 100px;
+                height: 50px;
+                margin-left: 10px;
+            }
+            input {
+                margin-left: 10px;
+            }
+        </style>
+        <script type='text/javascript'>
+            aoc = {};
+
+            isExecuting = false;
+            function printErr(e) {
+                if (isExecuting) {
+                    document.getElementById("output").value += e + "\n";
+                } else {
+                    console.warn(e);
+                }
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'aoc.wasm', true);
+            xhr.responseType = 'arraybuffer';
+            xhr.onload = function() {
+                var config = { wasmBinary: xhr.response, printErr: printErr };
+                // var config = { printErr: printErr };
+                var codeXHR = new XMLHttpRequest();
+                codeXHR.open('GET', 'aoc.js', true);
+                codeXHR.onload = function() {
+                    var code = codeXHR.responseText;
+                    var blob = new Blob([code], {type: 'text/javascript'});
+                    codeXHR = null;
+                    var src = URL.createObjectURL(blob);
+                    var script = document.createElement('script');
+                    script.src = URL.createObjectURL(blob);
+                    script.onload = function() {
+                        URL.revokeObjectURL(script.src);
+                        var module = AoC(config);
+                        aoc.calculate = module.cwrap('calculate', 'string', ['string', 'number']);
+                    };
+                    document.body.appendChild(script);
+                }
+                codeXHR.send(null);
+            };
+            xhr.send(null);
+
+            function calculate() {
+                console.log("Executing...");
+                var input = document.getElementById("input").value;
+                var part2 = document.getElementById("part2");
+                if (part2.checked) {
+                    part2 = 1;
+                } else {
+                    part2 = 0;
+                }
+                try {
+                    isExecuting = true;
+                    document.getElementById("output").value = "";
+                    var output = aoc.calculate(input, part2);
+                    if (output >= 0) {
+                        document.getElementById("output").value = output;
+                    }
+                } catch (e) {
+                    printErr(e);
+                }
+                isExecuting = false;
+            }
+        </script>
+    </head>
+    <body>
+        <p><textarea id="input" cols="80" rows="40">ULL
+RRDDD
+LURDL
+UUUUD</textarea></p>
+        <p>
+            <button onclick="calculate();">Calculate</button>
+            <label>
+                <input type="checkbox" id="part2" value="part2">
+                Part 2
+            </label>
+        </p>
+        <p><textarea id="output" cols="80" rows="10" readonly></textarea></p>
+    </body>
+</html>
