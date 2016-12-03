@@ -65,9 +65,7 @@
                     isExecuting = true;
                     document.getElementById("output").value = "";
                     var output = aoc.calculate(input, part2);
-                    if (output >= 0) {
-                        document.getElementById("output").value = output;
-                    }
+                    document.getElementById("output").value = output;
                 } catch (e) {
                     printErr(e);
                 }

@@ -31,7 +31,7 @@ pub unsafe extern "C" fn calculate(text: *const c_char, part2: bool) -> *const c
 
     if part2 {
         let result = part2::shift_all(5, text);
-        write!(output, "{}\0", result).unwrap();
+        write!(output, "{:X}\0", result).unwrap();
     } else {
         let result = part1::shift_all(5, text);
         write!(output, "{}\0", result).unwrap();
