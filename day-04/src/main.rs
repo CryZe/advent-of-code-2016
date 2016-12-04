@@ -5,7 +5,7 @@ extern crate arrayvec;
 use libc::c_char;
 use std::ffi::CStr;
 use arrayvec::ArrayVec;
-use std::borrow::Cow;
+use std::str::Chars;
 
 struct Room<'a> {
     name: &'a str,
@@ -38,21 +38,23 @@ fn parse_room(room: &str) -> Result<Room, ()> {
     })
 }
 
-fn decipher<'a>(room: &'a Room) -> Cow<'a, str> {
-    let shift = (room.id % 26) as u8;
-    if shift == 0 {
-        room.name.into()
-    } else {
-        room.name
-            .chars()
-            .map(|c| match c {
-                'a'...'z' => ((((c as u8) - b'a' + shift) % 26) + b'a') as char,
-                '-' => ' ',
-                c => c,
-            })
-            .collect::<String>()
-            .into()
+struct Cipher<'a>(Chars<'a>, u8);
+
+impl<'a> Iterator for Cipher<'a> {
+    type Item = char;
+
+    fn next(&mut self) -> Option<char> {
+        self.0.next().map(|c| match c {
+            'a'...'z' => ((((c as u8) - b'a' + self.1) % 26) + b'a') as char,
+            '-' => ' ',
+            c => c,
+        })
     }
+}
+
+fn decipher<'a>(room: &'a Room) -> Cipher<'a> {
+    let shift = (room.id % 26) as u8;
+    Cipher(room.name.chars(), shift)
 }
 
 fn is_real(room: &Room) -> bool {
@@ -82,7 +84,7 @@ fn find_id_of_northpole_object_storage(text: &str) -> Option<u64> {
     text.lines()
         .map(parse_room)
         .filter_map(Result::ok)
-        .find(|r| decipher(r) == "northpole object storage")
+        .find(|r| decipher(r).eq("northpole object storage".chars()))
         .map(|r| r.id)
 }
 
