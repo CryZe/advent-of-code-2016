@@ -82,9 +82,8 @@ fn find_id_of_northpole_object_storage(text: &str) -> Option<u64> {
     text.lines()
         .map(parse_room)
         .filter_map(Result::ok)
-        .filter(|r| decipher(r) == "northpole object storage")
+        .find(|r| decipher(r) == "northpole object storage")
         .map(|r| r.id)
-        .next()
 }
 
 #[no_mangle]
