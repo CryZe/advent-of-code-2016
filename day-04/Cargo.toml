@@ -1,0 +1,9 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+authors = ["Christopher Serr <christopher.serr@gmail.com>"]
+
+[dependencies]
+libc = "*"
+lazy_static = "*"
+arrayvec = "0.3.20"
