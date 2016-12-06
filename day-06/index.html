@@ -50,6 +50,27 @@
                 } catch (e) {
                 }
             }
+
+            const createContenderList = (contendersList, characters, lineIndex) => {
+                characters.forEach((character, placeIndex) => {
+                    if (!contendersList[placeIndex]) {
+                        contendersList[placeIndex] = {};
+                    }
+                    const contenders = contendersList[placeIndex];
+                    contenders[character] = (contenders[character] | 0) + 1;
+                });
+                return contendersList;
+            };
+            const leastCommon = o => Object.keys(o).reduce((a, b) => (o[a] < o[b] ? a : b));
+            const mostCommon = o => Object.keys(o).reduce((a, b) => (o[a] >  o[b] ? a : b));
+            const correctError = (input, selectionStrategy) => input.split("\n")
+                .map((line) => line.split(""))
+                .reduce(createContenderList, [])
+                .map(selectionStrategy)
+                .join("");
+
+            const part1JS = input => correctError(input, mostCommon);
+            const part2JS = input => correctError(input, leastCommon);
         </script>
     </head>
     <body>
@@ -72,8 +93,8 @@ enarar</textarea></p>
         <p>
             <button onclick="calculate(part1);">Part 1</button>
             <button onclick="calculate(part2);">Part 2</button>
-            <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
-            <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
+            <button onclick="calculate(part1JS);">Part 1 (JS)</button>
+            <button onclick="calculate(part2JS);">Part 2 (JS)</button>
         </p>
         <p><textarea id="output" cols="80" rows="10" readonly></textarea></p>
     </body>
