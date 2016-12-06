@@ -1,9 +1,0 @@
-Native: 57,26 ms
-wasm Firefox: 143,35 ms
-asm.js Firefox: 162,43 ms
-asm.js Edge: 199,70 ms
-wasm Chrome: 223,80 ms
-asm.js Chrome: 268,60 ms
-JS Chrome: 2.898,20 ms
-JS Edge: 3.240,00 ms
-JS Firefox: 5.558,88 ms
