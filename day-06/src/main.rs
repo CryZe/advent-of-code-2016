@@ -10,19 +10,21 @@ use std::ffi::CStr;
 use std::sync::Mutex;
 use std::{char, str};
 use std::cmp::{min, max};
+use std::iter::repeat;
 use itertools::Itertools;
 use smallvec::SmallVec;
 
 fn find_pattern<F>(text: &str, output: &mut String, mut cmp: F)
     where F: FnMut(usize, usize) -> usize
 {
-    let mut columns = text.lines()
-        .next()
-        .map(|l| l.trim().bytes().map(|_| [0; 26]).collect())
-        .unwrap_or_else(SmallVec::<[_; 8]>::new);
+    let mut columns = SmallVec::<[_; 8]>::new();
 
     for line in text.lines() {
-        for (b, column) in line.trim().bytes().zip(columns.iter_mut()) {
+        let line = line.trim();
+        let new_elements = line.len().saturating_sub(columns.len());
+        columns.extend(repeat([0; 26]).take(new_elements));
+
+        for (b, column) in line.bytes().zip(columns.iter_mut()) {
             if let Some(count) = column.get_mut((b.wrapping_sub(b'a')) as usize) {
                 *count += 1;
             }
