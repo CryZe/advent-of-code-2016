@@ -52,6 +52,7 @@ pub unsafe extern "C" fn part1(text: *const c_char) -> *const c_char {
 
     find_pattern(text, &mut output, max);
 
+    output.push('\0');
     output.as_ptr() as *const c_char
 }
 
@@ -62,5 +63,6 @@ pub unsafe extern "C" fn part2(text: *const c_char) -> *const c_char {
 
     find_pattern(text, &mut output, min);
 
+    output.push('\0');
     output.as_ptr() as *const c_char
 }
