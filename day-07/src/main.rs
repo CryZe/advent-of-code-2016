@@ -20,23 +20,15 @@ impl<'a> Iterator for Iter<'a> {
     fn next(&mut self) -> Option<Self::Item> {
         let window = self.inner.next();
         if let Some(window) = window {
-            if self.is_in_brackets {
-                if window[window.len() - 1] == b']' {
-                    for _ in 0..window.len().saturating_sub(1) {
-                        self.inner.next();
-                    }
-                    self.is_in_brackets = false;
-                    return self.inner.next().map(|w| (w, false));
-                }
-            } else if window[window.len() - 1] == b'[' {
-                for _ in 0..window.len().saturating_sub(1) {
-                    self.inner.next();
-                }
-                self.is_in_brackets = true;
-                return self.inner.next().map(|w| (w, true));
-            }
+            self.is_in_brackets = if self.is_in_brackets {
+                window[0] != b']'
+            } else {
+                window[0] == b'['
+            };
+            Some((window, self.is_in_brackets))
+        } else {
+            None
         }
-        window.map(|w| (w, self.is_in_brackets))
     }
 }
 
