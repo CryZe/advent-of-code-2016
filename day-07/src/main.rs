@@ -56,21 +56,20 @@ fn supports_tls(ip: &str) -> bool {
 }
 
 fn supports_ssl(ip: &str) -> bool {
-    let mut pairs = SmallVec::<[((u8, u8), [bool; 2]); 32]>::new();
+    let mut pairs = SmallVec::<[((u8, u8), bool); 32]>::new();
 
     for (w, is_in_brackets) in iter_ip(ip, 3) {
         if w[0] == w[2] && w[0] != w[1] {
-            let (key, index) = if is_in_brackets {
-                ((w[0], w[1]), 0)
+            let key = if is_in_brackets {
+                (w[0], w[1])
             } else {
-                ((w[1], w[0]), 1)
+                (w[1], w[0])
             };
 
             let mut found = false;
-            for &mut (k, ref mut flags) in &mut pairs {
+            for &mut (k, b) in &mut pairs {
                 if k == key {
-                    flags[index] = true;
-                    if flags[0] && flags[1] {
+                    if b != is_in_brackets {
                         return true;
                     }
                     found = true;
@@ -78,12 +77,7 @@ fn supports_ssl(ip: &str) -> bool {
                 }
             }
             if !found {
-                let flags = if index == 0 {
-                    [true, false]
-                } else {
-                    [false, true]
-                };
-                pairs.push((key, flags));
+                pairs.push((key, is_in_brackets));
             }
         }
     }
