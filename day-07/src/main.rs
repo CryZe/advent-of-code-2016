@@ -5,19 +5,52 @@ extern crate smallvec;
 use libc::c_char;
 use std::ffi::CStr;
 use std::str;
+use std::slice::Windows;
+use std::iter::Fuse;
 use smallvec::SmallVec;
 
+struct Iter<'a> {
+    inner: Fuse<Windows<'a, u8>>,
+    is_in_brackets: bool,
+}
+
+impl<'a> Iterator for Iter<'a> {
+    type Item = (&'a [u8], bool);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let window = self.inner.next();
+        if let Some(window) = window {
+            if self.is_in_brackets {
+                if window[window.len() - 1] == b']' {
+                    for _ in 0..window.len().saturating_sub(1) {
+                        self.inner.next();
+                    }
+                    self.is_in_brackets = false;
+                    return self.inner.next().map(|w| (w, false));
+                }
+            } else if window[window.len() - 1] == b'[' {
+                for _ in 0..window.len().saturating_sub(1) {
+                    self.inner.next();
+                }
+                self.is_in_brackets = true;
+                return self.inner.next().map(|w| (w, true));
+            }
+        }
+        window.map(|w| (w, self.is_in_brackets))
+    }
+}
+
+fn iter_ip(text: &str, window_len: usize) -> Iter {
+    Iter {
+        inner: text.as_bytes().windows(window_len).fuse(),
+        is_in_brackets: false,
+    }
+}
+
 fn supports_tls(ip: &str) -> bool {
-    let mut is_in_brackets = false;
     let mut found_abba = false;
 
-    for w in ip.as_bytes().windows(4) {
-        is_in_brackets = if is_in_brackets {
-            w[0] != b']'
-        } else {
-            w[0] == b'['
-        };
-
+    for (w, is_in_brackets) in iter_ip(ip, 4) {
         if w[0] == w[3] && w[1] == w[2] && w[0] != w[1] {
             if is_in_brackets {
                 return false;
@@ -31,16 +64,9 @@ fn supports_tls(ip: &str) -> bool {
 }
 
 fn supports_ssl(ip: &str) -> bool {
-    let mut is_in_brackets = false;
     let mut pairs = SmallVec::<[((u8, u8), [bool; 2]); 32]>::new();
 
-    for w in ip.as_bytes().windows(3) {
-        is_in_brackets = if is_in_brackets {
-            w[0] != b']'
-        } else {
-            w[0] == b'['
-        };
-
+    for (w, is_in_brackets) in iter_ip(ip, 3) {
         if w[0] == w[2] && w[0] != w[1] {
             let (key, index) = if is_in_brackets {
                 ((w[0], w[1]), 0)
