@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Advent of Code</title>
+        <style>
+            button {
+                width: 100px;
+                height: 50px;
+                margin-left: 10px;
+            }
+            input {
+                margin-left: 10px;
+            }
+        </style>
+        <script type='text/javascript'>
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('GET', 'aoc.wasm', true);
+            // xhr.responseType = 'arraybuffer';
+            // xhr.onload = function() {
+            //     var config = { wasmBinary: xhr.response, wasmJSMethod: 'native-wasm,asmjs' };
+                var config = {};
+                var codeXHR = new XMLHttpRequest();
+                codeXHR.open('GET', 'aoc.js', true);
+                codeXHR.onload = function() {
+                    var code = codeXHR.responseText;
+                    var blob = new Blob([code], {type: 'text/javascript'});
+                    codeXHR = null;
+                    var src = URL.createObjectURL(blob);
+                    var script = document.createElement('script');
+                    script.src = URL.createObjectURL(blob);
+                    script.onload = function() {
+                        URL.revokeObjectURL(script.src);
+                        var module = AoC(config);
+                        part1 = module.cwrap('part1', 'string', ['string']);
+                        part2 = module.cwrap('part2', 'string', ['string']);
+                    };
+                    document.body.appendChild(script);
+                }
+                codeXHR.send(null);
+            // };
+            // xhr.send(null);
+
+            function calculatePart1(code) {
+                var input = document.getElementById("input").value;
+                try {
+                    document.getElementById("output").value = "";
+                    var output = code(input);
+                    document.getElementById("output").value = output;
+                } catch (e) {
+                }
+            }
+
+            function calculatePart2(code) {
+                var input = document.getElementById("input").value;
+                try {
+                    var output = code(input);
+                    document.getElementById("image").src = output;
+                } catch (e) {
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <p><textarea id="input" cols="80" rows="40">rect 1x1
+rotate row y=0 by 5
+rect 1x1
+rotate row y=0 by 5
+rect 1x1
+rotate row y=0 by 3
+rect 1x1
+rotate row y=0 by 2
+rect 1x1
+rotate row y=0 by 3
+rect 1x1
+rotate row y=0 by 2
+rect 1x1
+rotate row y=0 by 5
+rect 1x1
+rotate row y=0 by 5
+rect 1x1
+rotate row y=0 by 3
+rect 1x1
+rotate row y=0 by 2
+rect 1x1
+rotate row y=0 by 3
+rect 2x1
+rotate row y=0 by 2
+rect 1x2
+rotate row y=1 by 5
+rotate row y=0 by 3
+rect 1x2
+rotate column x=30 by 1
+rotate column x=25 by 1
+rotate column x=10 by 1
+rotate row y=1 by 5
+rotate row y=0 by 2
+rect 1x2
+rotate row y=0 by 5
+rotate column x=0 by 1
+rect 4x1
+rotate row y=2 by 18
+rotate row y=0 by 5
+rotate column x=0 by 1
+rect 3x1
+rotate row y=2 by 12
+rotate row y=0 by 5
+rotate column x=0 by 1
+rect 4x1
+rotate column x=20 by 1
+rotate row y=2 by 5
+rotate row y=0 by 5
+rotate column x=0 by 1
+rect 4x1
+rotate row y=2 by 15
+rotate row y=0 by 15
+rotate column x=10 by 1
+rotate column x=5 by 1
+rotate column x=0 by 1
+rect 14x1
+rotate column x=37 by 1
+rotate column x=23 by 1
+rotate column x=7 by 2
+rotate row y=3 by 20
+rotate row y=0 by 5
+rotate column x=0 by 1
+rect 4x1
+rotate row y=3 by 5
+rotate row y=2 by 2
+rotate row y=1 by 4
+rotate row y=0 by 4
+rect 1x4
+rotate column x=35 by 3
+rotate column x=18 by 3
+rotate column x=13 by 3
+rotate row y=3 by 5
+rotate row y=2 by 3
+rotate row y=1 by 1
+rotate row y=0 by 1
+rect 1x5
+rotate row y=4 by 20
+rotate row y=3 by 10
+rotate row y=2 by 13
+rotate row y=0 by 10
+rotate column x=5 by 1
+rotate column x=3 by 3
+rotate column x=2 by 1
+rotate column x=1 by 1
+rotate column x=0 by 1
+rect 9x1
+rotate row y=4 by 10
+rotate row y=3 by 10
+rotate row y=1 by 10
+rotate row y=0 by 10
+rotate column x=7 by 2
+rotate column x=5 by 1
+rotate column x=2 by 1
+rotate column x=1 by 1
+rotate column x=0 by 1
+rect 9x1
+rotate row y=4 by 20
+rotate row y=3 by 12
+rotate row y=1 by 15
+rotate row y=0 by 10
+rotate column x=8 by 2
+rotate column x=7 by 1
+rotate column x=6 by 2
+rotate column x=5 by 1
+rotate column x=3 by 1
+rotate column x=2 by 1
+rotate column x=1 by 1
+rotate column x=0 by 1
+rect 9x1
+rotate column x=46 by 2
+rotate column x=43 by 2
+rotate column x=24 by 2
+rotate column x=14 by 3
+rotate row y=5 by 15
+rotate row y=4 by 10
+rotate row y=3 by 3
+rotate row y=2 by 37
+rotate row y=1 by 10
+rotate row y=0 by 5
+rotate column x=0 by 3
+rect 3x3
+rotate row y=5 by 15
+rotate row y=3 by 10
+rotate row y=2 by 10
+rotate row y=0 by 10
+rotate column x=7 by 3
+rotate column x=6 by 3
+rotate column x=5 by 1
+rotate column x=3 by 1
+rotate column x=2 by 1
+rotate column x=1 by 1
+rotate column x=0 by 1
+rect 9x1
+rotate column x=19 by 1
+rotate column x=10 by 3
+rotate column x=5 by 4
+rotate row y=5 by 5
+rotate row y=4 by 5
+rotate row y=3 by 40
+rotate row y=2 by 35
+rotate row y=1 by 15
+rotate row y=0 by 30
+rotate column x=48 by 4
+rotate column x=47 by 3
+rotate column x=46 by 3
+rotate column x=45 by 1
+rotate column x=43 by 1
+rotate column x=42 by 5
+rotate column x=41 by 5
+rotate column x=40 by 1
+rotate column x=33 by 2
+rotate column x=32 by 3
+rotate column x=31 by 2
+rotate column x=28 by 1
+rotate column x=27 by 5
+rotate column x=26 by 5
+rotate column x=25 by 1
+rotate column x=23 by 5
+rotate column x=22 by 5
+rotate column x=21 by 5
+rotate column x=18 by 5
+rotate column x=17 by 5
+rotate column x=16 by 5
+rotate column x=13 by 5
+rotate column x=12 by 5
+rotate column x=11 by 5
+rotate column x=3 by 1
+rotate column x=2 by 5
+rotate column x=1 by 5
+rotate column x=0 by 1</textarea></p>
+        <p>
+            <button onclick="calculatePart1(part1);">Part 1</button>
+            <button onclick="calculatePart2(part2);">Part 2</button>
+            <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
+            <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
+        </p>
+        <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
+        <p><img id="image" src=""style="width: 600px; image-rendering: pixelated;image-rendering: -moz-crisp-edges;image-rendering: speed;"></textarea></p>
+    </body>
+</html>
