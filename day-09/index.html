@@ -70,6 +70,32 @@
                 } catch (e) {
                 }
             }
+
+            function getDecompressedLength(str, recursive) {
+                let length = str.length;
+
+                for (let i = 0; i < str.length; i++) {
+                    if (str[i] !== '(') continue;
+                    const match = str.substr(i).match(/^\((\d+)x(\d+)\)/);
+                    const matchLength = parseInt(match[1], 10);
+                    const times = parseInt(match[2], 10);
+                    const start = i + match[0].length;
+                    const matchStr = str.substr(start, matchLength);
+                    const decompressedLength = recursive ? getDecompressedLength(matchStr, true) : matchStr.length;
+                    length += decompressedLength * times - matchStr.length - match[0].length;
+                    i = start + matchStr.length - 1;
+                }
+
+                return length;
+            }
+
+            function part1JS(input) {
+                return getDecompressedLength(input.trim(), false);
+            }
+
+            function part2JS(input) {
+                return getDecompressedLength(input.trim(), true);
+            }
         </script>
     </head>
     <body>
@@ -77,8 +103,8 @@
         <p>
             <button onclick="calculate(part1);">Part 1</button>
             <button onclick="calculate(part2);">Part 2</button>
-            <!--<button onclick="calculatePart1(part1JS);">Part 1 (JS)</button>
-            <button onclick="calculatePart1(part2JS);">Part 2 (JS)</button>-->
+            <button onclick="calculate(part1JS);">Part 1 (JS)</button>
+            <button onclick="calculate(part2JS);">Part 2 (JS)</button>
         </p>
         <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
     </body>

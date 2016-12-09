@@ -19,53 +19,50 @@ impl<'a> Iterator for Iter<'a> {
     type Item = Result<(u64, &'a str), &'static str>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            let (state, result) = match *self {
-                Iter::Done => {
-                    return None;
-                }
-                Iter::Normal(remaining) => {
-                    if let Some(index) = remaining.find('(') {
-                        (Iter::Parentheses(&remaining[index + 1..]),
-                         Some(Ok((1, &remaining[..index]))))
-                    } else {
-                        (Iter::Done, Some(Ok((1, remaining))))
-                    }
-                }
-                Iter::Parentheses(remaining) => {
-                    fn parse(text: &str) -> Result<(u64, &str, &str), &'static str> {
-                        let index = text.find('x').ok_or("Can't find x in parentheses")?;
-                        let len = text[..index].parse().map_err(|_| "Can't parse length")?;
-                        let text = &text[index + 1..];
-                        let index = text.find(')').ok_or("Can't find closing parentheses")?;
-                        let count = text[..index].parse().map_err(|_| "Can't parse count")?;
-                        let text = &text[index + 1..];
-                        if len <= text.len() {
-                            let (part, remaining) = text.split_at(len);
-                            Ok((count, part, remaining))
-                        } else {
-                            Err("Length is out of bounds")
-                        }
-                    }
-                    match parse(remaining) {
-                        Ok((count, part, remaining)) => {
-                            (Iter::Normal(remaining), Some(Ok((count, part))))
-                        }
-                        Err(e) => (Iter::Done, Some(Err(e))),
-                    }
-                }
-            };
-            *self = state;
-            if let Some(result) = result {
-                return Some(result);
+        let (state, result) = match *self {
+            Iter::Done => {
+                return None;
             }
-        }
+            Iter::Normal(remaining) => {
+                if let Some(index) = remaining.find('(') {
+                    (Iter::Parentheses(&remaining[index + 1..]), Ok((1, &remaining[..index])))
+                } else {
+                    (Iter::Done, Ok((1, remaining)))
+                }
+            }
+            Iter::Parentheses(remaining) => {
+                fn parse(text: &str) -> Result<(u64, &str, &str), &'static str> {
+                    let index = text.find('x').ok_or("Can't find x in parentheses")?;
+                    let len = text[..index].parse().map_err(|_| "Can't parse length")?;
+                    let text = &text[index + 1..];
+                    let index = text.find(')').ok_or("Can't find closing parentheses")?;
+                    let count = text[..index].parse().map_err(|_| "Can't parse count")?;
+                    let text = &text[index + 1..];
+                    if len <= text.len() {
+                        let (part, remaining) = text.split_at(len);
+                        Ok((count, part, remaining))
+                    } else {
+                        Err("Length is out of bounds")
+                    }
+                }
+                match parse(remaining) {
+                    Ok((count, part, remaining)) => (Iter::Normal(remaining), Ok((count, part))),
+                    Err(e) => (Iter::Done, Err(e)),
+                }
+            }
+        };
+        *self = state;
+        Some(result)
     }
+}
+
+fn part_iter(text: &str) -> Iter {
+    Iter::Normal(text)
 }
 
 fn len_v1(text: &str) -> Result<u64, &'static str> {
     let mut len = 0;
-    for part in Iter::Normal(text) {
+    for part in part_iter(text) {
         let (count, part) = part?;
         len += count * part.len() as u64;
     }
@@ -74,7 +71,7 @@ fn len_v1(text: &str) -> Result<u64, &'static str> {
 
 fn len_v2(text: &str) -> Result<u64, &'static str> {
     let mut len = 0;
-    for part in Iter::Normal(text) {
+    for part in part_iter(text) {
         let (count, part) = part?;
         let part_len = if part.contains('(') {
             len_v2(part)?
