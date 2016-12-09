@@ -60,6 +60,33 @@
                 } catch (e) {
                 }
             }
+
+            const getGrid = (n, m) => [...new Array(m)].map(() => new Array(n).fill(0)),
+                on = n => a => Array(n).fill(1).concat(a.slice(n)),
+                shift = d => a => a.slice(-(d % a.length)).concat(a.slice(0, -(d % a.length))),
+                replace = (i, el, a) => [...a.slice(0, i), el, ...a.slice(i + 1)],
+                replaceCol = (j, col, grid) => grid.map((a, i) => replace(j, col[i], a));
+            const op = {
+                rect: (n, m) => grid => grid.slice(0, m).map(on(n)).concat(grid.slice(m)),
+                rotate: {
+                    row:    (i, d) => grid =>    replace(i, shift(d)(grid[i]), grid),
+                    column: (j, d) => grid => replaceCol(j, shift(d)(grid.map(a => a[j])), grid),
+                }
+            };
+            const re = /([a-z]+) (?:([a-z]+) )?\D*(\d+)\D+(\d+)/,
+                ops = s => (([, f, g, n, m]) => (g ? op[f][g] : op[f])(+n, +m))(s.match(re)),
+                swipe = (s, grid0) => s.map(ops).reduce((grid, f) => f(grid), grid0),
+                sum = a => a.reduce((n, el) => n + el, 0),
+                sumAll = grid => sum(grid.map(sum)),
+                print = grid => grid.map(a => a.join('')).join('\n').replace(/0/g, ' ').replace(/1/g, '#');
+
+            function part1JS(input) {
+                return sumAll(swipe(input.trim().split('\n'), getGrid(50, 6)));
+            }
+
+            function part2JS(input) {
+                return print(swipe(input.trim().split('\n'), getGrid(50, 6)));
+            }
         </script>
     </head>
     <body>
@@ -236,8 +263,8 @@ rotate column x=0 by 1</textarea></p>
         <p>
             <button onclick="calculatePart1(part1);">Part 1</button>
             <button onclick="calculatePart2(part2);">Part 2</button>
-            <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
-            <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
+            <button onclick="calculatePart1(part1JS);">Part 1 (JS)</button>
+            <button onclick="calculatePart1(part2JS);">Part 2 (JS)</button>
         </p>
         <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
         <p><img id="image" src=""style="width: 600px; image-rendering: pixelated;image-rendering: -moz-crisp-edges;image-rendering: speed;"></textarea></p>
