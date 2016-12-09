@@ -16,7 +16,7 @@ enum Iter<'a> {
 }
 
 impl<'a> Iterator for Iter<'a> {
-    type Item = Result<(u64, &'a str), &'static str>;
+    type Item = Result<(u64, &'a str), (&'static str, &'a str)>;
 
     fn next(&mut self) -> Option<Self::Item> {
         let (state, result) = match *self {
@@ -25,24 +25,28 @@ impl<'a> Iterator for Iter<'a> {
             }
             Iter::Normal(remaining) => {
                 if let Some(index) = remaining.find('(') {
-                    (Iter::Parentheses(&remaining[index + 1..]), Ok((1, &remaining[..index])))
+                    let (part, paren) = remaining.split_at(index);
+                    (Iter::Parentheses(paren), Ok((1, part)))
                 } else {
                     (Iter::Done, Ok((1, remaining)))
                 }
             }
             Iter::Parentheses(remaining) => {
-                fn parse(text: &str) -> Result<(u64, &str, &str), &'static str> {
-                    let index = text.find('x').ok_or("Can't find x in parentheses")?;
-                    let len = text[..index].parse().map_err(|_| "Can't parse length")?;
-                    let text = &text[index + 1..];
-                    let index = text.find(')').ok_or("Can't find closing parentheses")?;
-                    let count = text[..index].parse().map_err(|_| "Can't parse count")?;
-                    let text = &text[index + 1..];
-                    if len <= text.len() {
-                        let (part, remaining) = text.split_at(len);
+                fn parse(text: &str) -> Result<(u64, &str, &str), (&'static str, &str)> {
+                    let index = text.find(')').ok_or(("Can't find closing parentheses", text))?;
+                    let whole_paren = &text[..index + 1];
+                    let paren = &text[1..index];
+                    let remaining = &text[index + 1..];
+                    let index = paren.find('x').ok_or(("Can't find x", whole_paren))?;
+                    let len = paren[..index].parse()
+                        .map_err(|_| ("Can't parse length", whole_paren))?;
+                    let count = paren[index + 1..].parse()
+                        .map_err(|_| ("Can't parse count", whole_paren))?;
+                    if len <= remaining.len() {
+                        let (part, remaining) = remaining.split_at(len);
                         Ok((count, part, remaining))
                     } else {
-                        Err("Length is out of bounds")
+                        Err(("Length is out of bounds", text))
                     }
                 }
                 match parse(remaining) {
@@ -60,7 +64,7 @@ fn part_iter(text: &str) -> Iter {
     Iter::Normal(text)
 }
 
-fn len_v1(text: &str) -> Result<u64, &'static str> {
+fn len_v1(text: &str) -> Result<u64, (&'static str, &str)> {
     let mut len = 0;
     for part in part_iter(text) {
         let (count, part) = part?;
@@ -69,7 +73,7 @@ fn len_v1(text: &str) -> Result<u64, &'static str> {
     Ok(len)
 }
 
-fn len_v2(text: &str) -> Result<u64, &'static str> {
+fn len_v2(text: &str) -> Result<u64, (&'static str, &str)> {
     let mut len = 0;
     for part in part_iter(text) {
         let (count, part) = part?;
@@ -95,7 +99,7 @@ pub unsafe extern "C" fn part1(text: *const c_char) -> *const c_char {
 
     match len_v1(text.trim()) {
         Ok(count) => write!(output, "{}", count).unwrap(),
-        Err(e) => output.push_str(e),
+        Err((error, part)) => write!(output, "{} in '{}'", error, part).unwrap(),
     }
 
     output.push('\0');
@@ -110,7 +114,7 @@ pub unsafe extern "C" fn part2(text: *const c_char) -> *const c_char {
 
     match len_v2(text.trim()) {
         Ok(count) => write!(output, "{}", count).unwrap(),
-        Err(e) => output.push_str(e),
+        Err((error, part)) => write!(output, "{} in '{}'", error, part).unwrap(),
     }
 
     output.push('\0');
