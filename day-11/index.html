@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Advent of Code</title>
+        <style>
+            button {
+                width: 100px;
+                height: 50px;
+                margin-left: 10px;
+            }
+            input {
+                margin-left: 10px;
+            }
+        </style>
+        <script type='text/javascript'>
+            var config = {};
+            var codeXHR = new XMLHttpRequest();
+            codeXHR.open('GET', 'aoc.js', true);
+            codeXHR.onload = function() {
+                var code = codeXHR.responseText;
+                var blob = new Blob([code], {type: 'text/javascript'});
+                codeXHR = null;
+                var src = URL.createObjectURL(blob);
+                var script = document.createElement('script');
+                script.src = URL.createObjectURL(blob);
+                script.onload = function() {
+                    URL.revokeObjectURL(script.src);
+                    var module = AoC(config);
+                    part1 = module.cwrap('part1', 'string', ['string']);
+                    part2 = module.cwrap('part2', 'string', ['string']);
+                };
+                document.body.appendChild(script);
+            }
+            codeXHR.send(null);
+
+            function calculate(code) {
+                var input = document.getElementById("input").value;
+                try {
+                    document.getElementById("output").value = "";
+                    var output = code(input);
+                    document.getElementById("output").value = output;
+                } catch (e) {
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <p><textarea id="input" cols="80" rows="40">The first floor contains a polonium generator, a thulium generator, a thulium-compatible microchip, a promethium generator, a ruthenium generator, a ruthenium-compatible microchip, a cobalt generator, and a cobalt-compatible microchip.
+The second floor contains a polonium-compatible microchip and a promethium-compatible microchip.
+The third floor contains nothing relevant.
+The fourth floor contains nothing relevant.</textarea></p>
+        <p>
+            <button onclick="calculate(part1);">Part 1</button>
+            <button onclick="calculate(part2);">Part 2</button>
+            <!--<button onclick="calculate(part1And2JS);">Part 1+2 (JS)</button>-->
+        </p>
+        <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
+    </body>
+</html>
