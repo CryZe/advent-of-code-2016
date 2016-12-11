@@ -149,20 +149,20 @@ impl Facility {
 
     fn is_valid(&self) -> bool {
         for floor in &self.floors {
-            let (mut has_generators, mut disconnected_microchips) = (false, false);
+            let mut has_generators = false;
             for component in floor {
-                match *component {
-                    Microchip(element) => {
+                if let Generator(_) = *component {
+                    has_generators = true;
+                    break;
+                }
+            }
+            if has_generators {
+                for component in floor {
+                    if let Microchip(element) = *component {
                         if !floor.contains(&Generator(element)) {
-                            disconnected_microchips = true;
+                            return false;
                         }
                     }
-                    Generator(_) => {
-                        has_generators = true;
-                    }
-                }
-                if disconnected_microchips && has_generators {
-                    return false;
                 }
             }
         }
