@@ -135,8 +135,10 @@ impl Facility {
         let mut facility = self.clone();
 
         let component = facility.floors[source_floor].remove(component_index).unwrap();
-        facility.floors[target_floor].push(component);
-        facility.floors[target_floor].sort();
+        let index = match facility.floors[target_floor].binary_search(&component) {
+            Ok(index) | Err(index) => index,
+        };
+        facility.floors[target_floor].insert(index, component);
 
         facility
     }
