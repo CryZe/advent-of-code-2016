@@ -122,6 +122,12 @@ impl Facility {
             steps += floor_count >> 1;
         }
 
+        steps += self.floors[..3]
+            .iter()
+            .enumerate()
+            .find(|&(_, f)| !f.is_empty())
+            .map_or(0, |(i, _)| self.elevator.saturating_sub(i));
+
         steps
     }
 
