@@ -1,0 +1,32 @@
+use {Register, Value, Instruction, RegSize};
+use std::str::FromStr;
+
+grammar;
+
+pub instructions: Vec<Instruction> = {
+    <l:instructions> <r:instruction> => { let mut l = l; l.push(r); l },
+    <i:instruction> => vec![i],
+};
+
+instruction: Instruction = {
+    "cpy" <s:value> <d:register> => Instruction::Cpy(s, d),
+    "inc" <r:register> => Instruction::Inc(r),
+    "dec" <r:register> => Instruction::Dec(r),
+    "jnz" <c:value> <o:value> => Instruction::Jnz(c, o),
+};
+
+register: Register = {
+    "a" => 0,
+    "b" => 1,
+    "c" => 2,
+    "d" => 3,
+};
+
+value: Value = {
+    <n:num> => Value::Immediate(n),
+    <r:register> => Value::Reg(r),
+};
+
+num: RegSize = {
+    r"(-?\d+)" => RegSize::from_str(<>).unwrap(),
+};

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Advent of Code</title>
+        <style>
+            button {
+                width: 100px;
+                height: 50px;
+                margin-left: 10px;
+            }
+            input {
+                margin-left: 10px;
+            }
+        </style>
+        <script type='text/javascript'>
+            var config = {};
+            var codeXHR = new XMLHttpRequest();
+            codeXHR.open('GET', 'aoc.js', true);
+            codeXHR.onload = function() {
+                var code = codeXHR.responseText;
+                var blob = new Blob([code], {type: 'text/javascript'});
+                codeXHR = null;
+                var src = URL.createObjectURL(blob);
+                var script = document.createElement('script');
+                script.src = URL.createObjectURL(blob);
+                script.onload = function() {
+                    URL.revokeObjectURL(script.src);
+                    var module = AoC(config);
+                    part1 = module.cwrap('part1', 'string', ['string']);
+                    part2 = module.cwrap('part2', 'string', ['string']);
+                };
+                document.body.appendChild(script);
+            }
+            codeXHR.send(null);
+
+            function calculate(code) {
+                var input = document.getElementById("input").value;
+                document.getElementById("output").value = "";
+                var output = code(input);
+                document.getElementById("output").value = output;
+            }
+        </script>
+    </head>
+    <body>
+        <p><textarea id="input" cols="80" rows="40">cpy 1 a
+cpy 1 b
+cpy 26 d
+jnz c 2
+jnz 1 5
+cpy 7 c
+inc d
+dec c
+jnz c -2
+cpy a c
+inc a
+dec b
+jnz b -2
+cpy c b
+dec d
+jnz d -6
+cpy 16 c
+cpy 12 d
+inc a
+dec d
+jnz d -2
+dec c
+jnz c -5</textarea></p>
+        <p>
+            <button onclick="calculate(part1);">Part 1</button>
+            <button onclick="calculate(part2);">Part 2</button>
+            <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
+            <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
+        </p>
+        <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
+    </body>
+</html>
