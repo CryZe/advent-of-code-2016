@@ -289,7 +289,7 @@ pub unsafe extern "C" fn draw_original(text: *const c_char) -> *const c_char {
     output.clear();
 
     if let Ok(input) = text.parse() {
-        if is_empty(30, 29, input) {
+        if is_empty(30, 39, input) {
             let nx: u16 = 50;
             let ny = nx;
 
