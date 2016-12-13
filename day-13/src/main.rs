@@ -3,6 +3,9 @@ extern crate libc;
 #[macro_use]
 extern crate lazy_static;
 extern crate smallvec;
+extern crate base64;
+extern crate image;
+extern crate gif;
 
 use libc::c_char;
 use std::ffi::CStr;
@@ -11,6 +14,8 @@ use std::sync::Mutex;
 use std::fmt::Write;
 use std::collections::BinaryHeap;
 use std::cmp::{PartialOrd, Ord, Eq, PartialEq, Ordering};
+use image::{RgbImage, Rgb};
+use gif::{Encoder, Frame};
 
 use smallvec::SmallVec;
 
@@ -62,19 +67,25 @@ impl Pos {
     }
 
     fn right(&self) -> Self {
-        Pos {
+        let mut pos = Pos {
             x: self.x + 1,
+            y: self.y,
             steps: self.steps + 1,
-            ..self.clone()
-        }
+            min_steps: 0,
+        };
+        pos.calculate_min_steps();
+        pos
     }
 
     fn down(&self) -> Self {
-        Pos {
+        let mut pos = Pos {
+            x: self.x,
             y: self.y + 1,
             steps: self.steps + 1,
-            ..self.clone()
-        }
+            min_steps: 0,
+        };
+        pos.calculate_min_steps();
+        pos
     }
 
     fn left(&self) -> Option<Self> {
@@ -107,27 +118,33 @@ impl Pos {
         }
     }
 
-    fn try_visit(&self, field: &mut Field, input: usize) -> bool {
+    fn try_visit<F>(&self, field: &mut Field<F>, input: usize) -> bool
+        where F: FnMut(usize, usize, usize) -> bool
+    {
         field.try_visit(self.x, self.y, input)
     }
 }
 
-struct Field {
-    visited: SmallVec<[SmallVec<[bool; 32]>; 32]>,
+struct Field<F>
+    where F: FnMut(usize, usize, usize) -> bool
+{
+    visited: Vec<SmallVec<[bool; 32]>>,
+    is_empty: F,
 }
 
-impl Field {
-    fn new() -> Self {
-        Field { visited: Default::default() }
+impl<F> Field<F>
+    where F: FnMut(usize, usize, usize) -> bool
+{
+    fn new(is_empty: F) -> Self {
+        Field {
+            visited: Vec::with_capacity(45),
+            is_empty: is_empty,
+        }
     }
 
     fn try_visit(&mut self, x: usize, y: usize, input: usize) -> bool {
         if y >= self.visited.len() {
-            let elements = y + 1 - self.visited.len();
-            self.visited.reserve(elements);
-            for _ in 0..elements {
-                self.visited.push(Default::default());
-            }
+            self.visited.resize(y + 1, Default::default());
         }
         let mut row = &mut self.visited[y];
         if x >= row.len() {
@@ -140,37 +157,34 @@ impl Field {
         let mut cell = &mut row[x];
         if *cell {
             *cell = false;
-            let val = x * x + 3 * x + 2 * x * y + y + y * y + input;
-            val.count_ones() & 1 == 0
+            (self.is_empty)(x, y, input)
         } else {
             false
         }
     }
 }
 
-// fn draw_field<W>(mut write: W, field: &Field, player: &Pos)
-//     where W: Write
-// {
-//     for (y, row) in field.visited.iter().enumerate() {
-//         for (x, &state) in row.iter().enumerate() {
-//             if player.x == x && player.y == y {
-//                 write!(write, "O").unwrap();
-//             } else if state {
-//                 write!(write, ".").unwrap();
-//             } else {
-//                 write!(write, "#").unwrap();
-//             }
-//         }
-//         writeln!(write, "").unwrap();
-//     }
-// }
+fn is_empty(x: usize, y: usize, input: usize) -> bool {
+    let val = x * x + 3 * x + 2 * x * y + y + y * y + input;
+    val.count_ones() & 1 == 0
+}
 
-fn traverse<F, E, R>(input: usize, mut filter: F, mut end: E) -> Result<R, &'static str>
+fn is_empty_draw(x: usize, y: usize, input: usize) -> bool {
+    let val = x * x + 3 * x + 2 * x * y + y + y * y + input + 2;
+    (val.count_ones() % 5) % 2 == 0
+}
+
+fn traverse<I, F, E, R>(input: usize,
+                        is_empty: I,
+                        mut filter: F,
+                        mut end: E)
+                        -> Result<R, &'static str>
     where F: FnMut(&Pos) -> bool,
-          E: FnMut(&Pos) -> Option<R>
+          E: FnMut(&Pos) -> Option<R>,
+          I: FnMut(usize, usize, usize) -> bool
 {
-    let mut field = &mut Field::new();
-    let mut heap = BinaryHeap::new();
+    let mut field = &mut Field::new(is_empty);
+    let mut heap = BinaryHeap::with_capacity(32);
     field.try_visit(1, 1, input);
     heap.push(Pos::new());
 
@@ -209,21 +223,29 @@ fn traverse<F, E, R>(input: usize, mut filter: F, mut end: E) -> Result<R, &'sta
 }
 
 fn traverse_part1(input: usize) -> Result<usize, &'static str> {
-    traverse(input, |_| true, |pos| if pos.x == 31 && pos.y == 39 {
-        Some(pos.steps)
-    } else {
-        None
-    })
+    traverse(input,
+             is_empty,
+             |_| true,
+             |pos| if pos.x == 31 && pos.y == 39 {
+                 Some(pos.steps)
+             } else {
+                 None
+             })
 }
 
 fn traverse_part2(input: usize) -> usize {
     let mut count = 0;
-    traverse(input, |pos| pos.steps < 50, |_| {
+    traverse(input, is_empty, |pos| pos.steps < 50, |_| {
             count += 1;
             None::<()>
         })
         .ok();
     count
+}
+
+fn gif_to_url(buf: &[u8], out: &mut String) {
+    let text = base64::encode(buf);
+    write!(out, "data:image/gif;base64,{}", text).unwrap()
 }
 
 lazy_static! {
@@ -254,6 +276,82 @@ pub unsafe extern "C" fn part2(text: *const c_char) -> *const c_char {
     match text.parse().map_err(|_| "Can't parse input").map(traverse_part2) {
         Ok(count) => writeln!(output, "Count: {}", count).unwrap(),
         Err(e) => writeln!(output, "Error: {}", e).unwrap(),
+    }
+
+    output.push('\0');
+    output.as_ptr() as *const c_char
+}
+
+
+#[no_mangle]
+pub unsafe extern "C" fn draw(text: *const c_char) -> *const c_char {
+    let text = CStr::from_ptr(text).to_str().unwrap();
+    let mut output = OUTPUT.lock().unwrap();
+    output.clear();
+
+    if let Ok(input) = text.parse() {
+        if is_empty_draw(30, 29, input) {
+            let nx: u16 = 70;
+            let ny = nx;
+
+            let mut image = RgbImage::new(nx as u32, ny as u32);
+
+            for (x, y, pixel) in image.enumerate_pixels_mut() {
+                let value = if is_empty_draw(x as usize, y as usize, input) {
+                    0xFF
+                } else {
+                    0x00
+                };
+                pixel.data = [value, value, value];
+            }
+
+            image.put_pixel(30, 29, Rgb { data: [0x00, 0x0, 0xFF] });
+            image.put_pixel(1, 1, Rgb { data: [0x00, 0x0, 0xFF] });
+
+            let mut data = Vec::new();
+            {
+                let mut encoder = Encoder::new(&mut data, nx, ny, &[]).unwrap();
+                let mut frame = Frame::from_rgb(nx, ny, &image);
+                frame.delay = 50;
+                encoder.write_frame(&frame).unwrap();
+
+                let mut i = 0;
+
+                traverse(input, is_empty_draw, |_| true, |pos| {
+                        let x = pos.x as u32;
+                        let y = pos.y as u32;
+                        if x < nx as u32 && y < ny as u32 {
+                            image.put_pixel(x,
+                                            y,
+                                            Rgb {
+                                                data: [0,
+                                                       (18 * pos.steps / 10) as u8,
+                                                       255 - (18 * pos.steps / 10) as u8],
+                                            });
+                            if i % 10 == 0 {
+                                let frame = Frame::from_rgb(nx, ny, &image);
+                                encoder.write_frame(&frame).unwrap();
+                            }
+                            i += 1;
+                        }
+
+                        if pos.min_steps > 150 || (pos.x == 30 && pos.y == 29) {
+                            let frame = Frame::from_rgb(nx, ny, &image);
+                            encoder.write_frame(&frame).unwrap();
+                            Some(())
+                        } else {
+                            None
+                        }
+                    })
+                    .ok();
+            }
+
+            gif_to_url(&data, &mut output);
+        } else {
+            output.push_str("Error: Seed produces a wall at the target location.");
+        }
+    } else {
+        output.push_str("Error: Can't parse the input as a number.");
     }
 
     output.push('\0');

@@ -30,6 +30,7 @@
                     var module = AoC(config);
                     part1 = module.cwrap('part1', 'string', ['string']);
                     part2 = module.cwrap('part2', 'string', ['string']);
+                    draw = module.cwrap('draw', 'string', ['string']);
                 };
                 document.body.appendChild(script);
             }
@@ -41,16 +42,30 @@
                 var output = code(input);
                 document.getElementById("output").value = output;
             }
+
+            function drawImage() {
+                var input = document.getElementById("input").value;
+                var url = draw(input);
+                if (url.startsWith("Error: ")) {
+                    document.getElementById("output").value = url;
+                    document.getElementById("image").src = "";
+                } else {
+                    document.getElementById("output").value = "";
+                    document.getElementById("image").src = url;
+                }
+            }
         </script>
     </head>
     <body>
-        <p><textarea id="input" cols="80" rows="40">1364</textarea></p>
+        <p><textarea id="input" cols="80" rows="1">1364</textarea></p>
         <p>
             <button onclick="calculate(part1);">Part 1</button>
             <button onclick="calculate(part2);">Part 2</button>
+            <button onclick="drawImage();">Draw</button>
             <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
             <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
         </p>
         <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
+        <p><img id="image" style="width: 600px; image-rendering: pixelated;image-rendering: -moz-crisp-edges;image-rendering: speed;" src=""></p>
     </body>
 </html>

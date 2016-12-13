@@ -1,4 +1,4 @@
-standard_flags = "-s EXPORTED_FUNCTIONS=['_part1','_part2'] -s MODULARIZE=1 -s EXPORT_NAME='AoC'"
+standard_flags = "-s EXPORTED_FUNCTIONS=['_part1','_part2','_draw'] -s TOTAL_MEMORY=67108864 -s MODULARIZE=1 -s EXPORT_NAME='AoC'"
 debug_flags = standard_flags + " -g -s ASSERTIONS=2 -s DEMANGLE_SUPPORT=1 -s SAFE_HEAP=1"
 release_flags = standard_flags + " -O3"
 
