@@ -15,7 +15,31 @@
             }
         </style>
         <script type='text/javascript'>
-            var config = {};
+            function drawImage(draw) {
+                var input = document.getElementById("input").value;
+                var url = draw(input);
+                if (url.startsWith("Error: ")) {
+                    document.getElementById("output").value = url;
+                    document.getElementById("image").src = "";
+                } else {
+                    document.getElementById("output").value = "";
+                    document.getElementById("image").src = url;
+                }
+            }
+
+            var config = {
+                onRuntimeInitialized: function() {
+                    var url = window.location.href;
+                    var captured = /seed=([^&]+)/.exec(url);
+                    if (captured !== null && captured.length === 2) {
+                        document.getElementById("input").value = captured[1];
+                    }
+                    var captured = /run=true/.exec(url);
+                    if (captured !== null && captured.length === 1) {
+                        drawImage(draw_original);
+                    }
+                }
+            };
             var codeXHR = new XMLHttpRequest();
             codeXHR.open('GET', 'aoc.js', true);
             codeXHR.onload = function() {
@@ -42,18 +66,6 @@
                 document.getElementById("output").value = "";
                 var output = code(input);
                 document.getElementById("output").value = output;
-            }
-
-            function drawImage(draw) {
-                var input = document.getElementById("input").value;
-                var url = draw(input);
-                if (url.startsWith("Error: ")) {
-                    document.getElementById("output").value = url;
-                    document.getElementById("image").src = "";
-                } else {
-                    document.getElementById("output").value = "";
-                    document.getElementById("image").src = url;
-                }
             }
         </script>
     </head>
