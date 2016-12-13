@@ -282,9 +282,76 @@ pub unsafe extern "C" fn part2(text: *const c_char) -> *const c_char {
     output.as_ptr() as *const c_char
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn draw_original(text: *const c_char) -> *const c_char {
+    let text = CStr::from_ptr(text).to_str().unwrap();
+    let mut output = OUTPUT.lock().unwrap();
+    output.clear();
+
+    if let Ok(input) = text.parse() {
+        if is_empty(30, 29, input) {
+            let nx: u16 = 50;
+            let ny = nx;
+
+            let mut image = RgbImage::new(nx as u32, ny as u32);
+
+            for (x, y, pixel) in image.enumerate_pixels_mut() {
+                let value = if is_empty(x as usize, y as usize, input) {
+                    0xFF
+                } else {
+                    0x00
+                };
+                pixel.data = [value, value, value];
+            }
+
+            image.put_pixel(31, 39, Rgb { data: [0x00, 0x0, 0xFF] });
+            image.put_pixel(1, 1, Rgb { data: [0x00, 0x0, 0xFF] });
+
+            let mut data = Vec::new();
+            {
+                let mut encoder = Encoder::new(&mut data, nx, ny, &[]).unwrap();
+                let mut frame = Frame::from_rgb(nx, ny, &image);
+                frame.delay = 50;
+                encoder.write_frame(&frame).unwrap();
+
+                traverse(input, is_empty, |_| true, |pos| {
+                        let x = pos.x as u32;
+                        let y = pos.y as u32;
+                        if x < nx as u32 && y < ny as u32 {
+                            image.put_pixel(x,
+                                            y,
+                                            Rgb {
+                                                data: [0,
+                                                       (18 * pos.steps / 10) as u8,
+                                                       255 - (18 * pos.steps / 10) as u8],
+                                            });
+                            let frame = Frame::from_rgb(nx, ny, &image);
+                            encoder.write_frame(&frame).unwrap();
+                        }
+
+                        if pos.min_steps > 150 || (pos.x == 31 && pos.y == 39) {
+                            Some(())
+                        } else {
+                            None
+                        }
+                    })
+                    .ok();
+            }
+
+            gif_to_url(&data, &mut output);
+        } else {
+            output.push_str("Error: Seed produces a wall at the target location.");
+        }
+    } else {
+        output.push_str("Error: Can't parse the input as a number.");
+    }
+
+    output.push('\0');
+    output.as_ptr() as *const c_char
+}
 
 #[no_mangle]
-pub unsafe extern "C" fn draw(text: *const c_char) -> *const c_char {
+pub unsafe extern "C" fn draw_modified(text: *const c_char) -> *const c_char {
     let text = CStr::from_ptr(text).to_str().unwrap();
     let mut output = OUTPUT.lock().unwrap();
     output.clear();

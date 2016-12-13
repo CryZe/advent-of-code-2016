@@ -6,7 +6,7 @@
         <title>Advent of Code</title>
         <style>
             button {
-                width: 100px;
+                width: 120px;
                 height: 50px;
                 margin-left: 10px;
             }
@@ -30,7 +30,8 @@
                     var module = AoC(config);
                     part1 = module.cwrap('part1', 'string', ['string']);
                     part2 = module.cwrap('part2', 'string', ['string']);
-                    draw = module.cwrap('draw', 'string', ['string']);
+                    draw_original = module.cwrap('draw_original', 'string', ['string']);
+                    draw_modified = module.cwrap('draw_modified', 'string', ['string']);
                 };
                 document.body.appendChild(script);
             }
@@ -43,7 +44,7 @@
                 document.getElementById("output").value = output;
             }
 
-            function drawImage() {
+            function drawImage(draw) {
                 var input = document.getElementById("input").value;
                 var url = draw(input);
                 if (url.startsWith("Error: ")) {
@@ -61,7 +62,8 @@
         <p>
             <button onclick="calculate(part1);">Part 1</button>
             <button onclick="calculate(part2);">Part 2</button>
-            <button onclick="drawImage();">Draw</button>
+            <button onclick="drawImage(draw_original);">Draw (Original)</button>
+            <button onclick="drawImage(draw_modified);">Draw (Modified)</button>
             <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
             <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
         </p>
