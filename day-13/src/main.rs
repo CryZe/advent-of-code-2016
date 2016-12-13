@@ -322,14 +322,18 @@ pub unsafe extern "C" fn draw_original(text: *const c_char) -> *const c_char {
                                             y,
                                             Rgb {
                                                 data: [0,
-                                                       (18 * pos.steps / 10) as u8,
-                                                       255 - (18 * pos.steps / 10) as u8],
+                                                       if pos.steps < 256 {
+                                                           pos.steps as u8
+                                                       } else {
+                                                           255
+                                                       },
+                                                       255u8.saturating_sub(pos.steps as u8)],
                                             });
                             let frame = Frame::from_rgb(nx, ny, &image);
                             encoder.write_frame(&frame).unwrap();
                         }
 
-                        if pos.min_steps > 150 || (pos.x == 31 && pos.y == 39) {
+                        if pos.min_steps > 300 || (pos.x == 31 && pos.y == 39) {
                             Some(())
                         } else {
                             None
