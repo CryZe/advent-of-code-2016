@@ -1,0 +1,22 @@
+use Operation;
+use std::str::FromStr;
+
+grammar;
+
+pub operation: Operation = {
+    "swap position" <num> "with position" <num> => Operation::SwapPosition(<>),
+    "swap letter" <letter> "with letter" <letter> => Operation::SwapLetter(<>),
+    "rotate left" <num> r"steps?" => Operation::RotateLeft(<>),
+    "rotate right" <num> r"steps?" => Operation::RotateRight(<>),
+    "rotate based on position of letter" <letter> => Operation::RotatePosition(<>),
+    "reverse positions" <num> "through" <num> => Operation::ReversePositions(<>),
+    "move position" <num> "to position" <num> => Operation::Move(<>),
+};
+
+num: usize = {
+    r"(\d+)" => usize::from_str(<>).unwrap(),
+};
+
+letter: u8 = {
+    r"([a-h])" => <>.as_bytes()[0],
+};

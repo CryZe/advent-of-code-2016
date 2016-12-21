@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Advent of Code</title>
+        <style>
+            button {
+                width: 120px;
+                height: 50px;
+                margin-left: 10px;
+            }
+            input {
+                margin-left: 10px;
+            }
+        </style>
+        <script type='text/javascript'>
+            if (typeof WebAssembly !== "object") {
+                var codeXHR = new XMLHttpRequest();
+                codeXHR.open('GET', 'aoc_asm.js', true);
+                codeXHR.onload = function() {
+                    var code = codeXHR.responseText;
+                    var blob = new Blob([code], {type: 'text/javascript'});
+                    codeXHR = null;
+                    var src = URL.createObjectURL(blob);
+                    var script = document.createElement('script');
+                    script.src = URL.createObjectURL(blob);
+                    script.onload = function() {
+                        URL.revokeObjectURL(script.src);
+                        var module = AoC({});
+                        part1 = module.cwrap('part1', 'string', ['string']);
+                        part2 = module.cwrap('part2', 'string', ['string']);
+                    };
+                    document.body.appendChild(script);
+                }
+                codeXHR.send(null);
+            } else {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'aoc.wasm', true);
+                xhr.responseType = 'arraybuffer';
+                xhr.onload = function() {
+                    var codeXHR = new XMLHttpRequest();
+                    codeXHR.open('GET', 'aoc_wasm.js', true);
+                    codeXHR.onload = function() {
+                        var code = codeXHR.responseText;
+                        var blob = new Blob([code], {type: 'text/javascript'});
+                        codeXHR = null;
+                        var src = URL.createObjectURL(blob);
+                        var script = document.createElement('script');
+                        script.src = URL.createObjectURL(blob);
+                        script.onload = function() {
+                            URL.revokeObjectURL(script.src);
+                            var module = AoC({ wasmBinary: xhr.response, wasmJSMethod: 'native-wasm' });
+                            part1 = module.cwrap('part1', 'string', ['string']);
+                            part2 = module.cwrap('part2', 'string', ['string']);
+                        };
+                        document.body.appendChild(script);
+                    };
+                    codeXHR.send(null);
+                };
+                xhr.send(null);
+            }
+
+            function calculate(code) {
+                var input = document.getElementById("input").value;
+                document.getElementById("output").value = "";
+                var output = code(input);
+                document.getElementById("output").value = output;
+            }
+        </script>
+    </head>
+    <body>
+        <p><textarea id="input" cols="80" rows="1">3018458</textarea></p>
+        <p>
+            <button onclick="calculate(part1);">Part 1</button>
+            <button onclick="calculate(part2);">Part 2</button>
+            <!--<button onclick="calculate(part1JS);">Part 1 (JS)</button>
+            <button onclick="calculate(part2JS);">Part 2 (JS)</button>-->
+        </p>
+        <p><textarea id="output" cols="80" rows="1" readonly></textarea></p>
+    </body>
+</html>
